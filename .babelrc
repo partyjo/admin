@@ -1,0 +1,17 @@
+{
+	"presets": [
+		"env",
+		"react"
+	],
+	"plugins": [
+		"transform-runtime",
+		"react-hot-loader/babel",
+		[
+			"import",
+			{
+				"libraryName": "antd",
+				"style": true
+			}
+		]
+	]
+}
