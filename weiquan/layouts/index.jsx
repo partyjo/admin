@@ -17,9 +17,7 @@ export default withRouter(props => (
 				style={{ lineHeight: '64px' }}
 			>
 				<Menu.Item key="/home"><Link to='/home'>首页</Link></Menu.Item>
-				<Menu.Item key="/weiquan/1"><Link to='/weiquan/1'>妇儿天地</Link></Menu.Item>
-				<Menu.Item key="/weiquan/2"><Link to='/weiquan/2'>工会</Link></Menu.Item>
-				<Menu.Item key="/weiquan/3"><Link to='/weiquan/3'>团委</Link></Menu.Item>
+				<Menu.Item key="/weiquan"><Link to='/weiquan'>维权管理</Link></Menu.Item>
 			</Menu>
 		</Header>
 		<Content style={{ padding: '0 50px', marginTop: 50 }}>

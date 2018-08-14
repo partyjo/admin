@@ -11,6 +11,6 @@ export default (
                <Redirect to='/home'/>
            )} />
         <Route path='/home' component={Bundle(HomePage)} />
-        <Route path='/weiquan/:pid' component={Bundle(weiquanPage)} />
+        <Route path='/weiquan' component={Bundle(weiquanPage)} />
     </div>
 )
