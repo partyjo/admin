@@ -3,7 +3,9 @@ import { Route, Redirect } from 'react-router-dom'
 import Bundle from 'utils/Bundle'
 
 import HomePage from 'bundle-loader?lazy!./pages/home/index'
-import weiquanPage from 'bundle-loader?lazy!./pages/weiquan/index'
+import WeiquanPage from 'bundle-loader?lazy!./pages/weiquan/index'
+import ArticleListPage from 'bundle-loader?lazy!./pages/article/list/index'
+import ArticleEditpage from 'bundle-loader?lazy!./pages/article/edit/index'
 
 export default (
     <div>
@@ -11,6 +13,8 @@ export default (
                <Redirect to='/home'/>
            )} />
         <Route path='/home' component={Bundle(HomePage)} />
-        <Route path='/weiquan' component={Bundle(weiquanPage)} />
+        <Route path='/weiquan' component={Bundle(WeiquanPage)} />
+        <Route path='/article/list' component={Bundle(ArticleListPage)} />
+        <Route path='/article/edit/:id' component={Bundle(ArticleEditpage)} />
     </div>
 )
