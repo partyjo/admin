@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import ajax from 'http/index'
-import { Table, Select, Popconfirm } from 'antd'
+import { Table, Select, Popconfirm, Button } from 'antd'
 import './index.less'
 const Option = Select.Option;
 class ArticleList extends React.Component {
@@ -28,9 +28,9 @@ class ArticleList extends React.Component {
           title: 'Action', 
           dataIndex: 'action', 
           width: '20%',
-          render: row => <span>
-            <Link to={'/article/edit/' + row.id}>编辑</Link>
-            <Popconfirm title='确定删除吗？' onConfirm={this.handleDelete.bind(this, row)} okText='Yes' cancelText='No'>
+          render: (text, record) => <span>
+            <Link to={'/article/edit/' + record.id}>编辑</Link>
+            <Popconfirm title='确定删除吗？' onConfirm={this.handleDelete.bind(this, record)} okText='Yes' cancelText='No'>
               <a href="javascript:;">删除</a>
             </Popconfirm>
           </span>
@@ -93,14 +93,17 @@ class ArticleList extends React.Component {
     render () {
         return (
             <div style={{ padding: '15px 0' }}>
-                <Table
-                  columns={this.columns}
-                  rowKey={record => record.id}
-                  dataSource={this.state.data}
-                  pagination={this.state.pagination}
-                  loading={this.state.loading}
-                  onChange={this.handleTableChange.bind(this)}
-                />
+              <div style={{ marginBottom: 15 }}>
+                <Button type='primary'><Link to='/article/edit/0'>新增</Link></Button>
+              </div>
+              <Table
+                columns={this.columns}
+                rowKey={record => record.id}
+                dataSource={this.state.data}
+                pagination={this.state.pagination}
+                loading={this.state.loading}
+                onChange={this.handleTableChange.bind(this)}
+              />
             </div>
         )
     }

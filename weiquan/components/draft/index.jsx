@@ -6,7 +6,6 @@ import draftToHtml from 'draftjs-to-html'
 import htmlToDraft from 'html-to-draftjs'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import './index.less'
-import img from '../../images/bg.jpg'
 
 export default class MyEditor extends React.Component {
   constructor(props) {
@@ -33,8 +32,7 @@ export default class MyEditor extends React.Component {
         var reader = new FileReader()
 
         reader.onloadend = function() {
-          console.log(reader.result)
-          resolve({ data: { link: img } })
+          resolve({ data: { link: reader.result } })
         }
 
         reader.readAsDataURL(file)
@@ -42,7 +40,7 @@ export default class MyEditor extends React.Component {
     )
   }
   onContentStateChange (contentState) {
-    this.props.onContentStateChange(this.draft2Html(contentState))
+    this.props.onChange(this.draft2Html(contentState))
   }
   draft2Html (contentState) {
     return draftToHtml(contentState)

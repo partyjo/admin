@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
+import Editor from 'components/draft/index'
 import ajax from 'http/index'
-import { Form, Select, Button, Input, Upload, Icon, message } from 'antd'
+import { Form, Select, Button, Input, Upload, Icon, Message } from 'antd'
 import './index.less'
 const Option = Select.Option
 const FormItem = Form.Item
@@ -11,22 +12,25 @@ class ArticleEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-          id: props.id,
+          id: parseInt(props.match.params.id),
           data: {
             cid: 1,
             title: '',
             summary: '',
             author: '',
-            content: '',
+            content: '<p>请输入文章内容</p>',
             link: '',
             thumb: ''
           }
         }
+        this.editorcontent = ''
     }
     componentWillMount () {
-      this.getdata({
-        id: this.state.id
-      });
+      if (this.state.id) {
+        this.getdata({
+          id: this.state.id
+        });
+      }
     }
     getdata (params) {
       ajax({
@@ -40,6 +44,61 @@ class ArticleEdit extends React.Component {
           })
         }
       })
+    }
+    saveData (data) {
+      ajax({
+        method: 'post',
+        url: data.id ? '/article/update' : '/article/add',
+        data: data
+      }).then(res => {
+        if (res.code === 0) {
+          Message.success('保存成功')
+          if (this.state.id === 0) {
+            location.href = '/article/edit/' + res.data.id
+          }
+        }
+      })
+    }
+    beforeUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      if (!isJPG) {
+        message.error('You can only upload JPG file!')
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        message.error('Image must smaller than 2MB!')
+      }
+      return isJPG && isLt2M
+    }
+    // 上传
+    handleUpload (res) {
+      if (res.file.response && res.file.response.code === 0) {
+        const data = this.state.data;
+        data.thumb = res.file.response.data.file_path;
+        this.setState({data})
+      } else if (res.file.response && res.file.response.msg) {
+        message.error(res.file.response.msg)
+      }
+    }
+    handleEditorChange (content) {
+      this.editorcontent = content
+    }
+    handleSubmit () {
+      this.props.form.validateFields(
+        (err) => {
+          if (!err) {
+            const formData = this.props.form.getFieldsValue()
+            formData.cid = 1
+            formData.content = this.editorcontent
+            formData.thumb = this.state.data.thumb
+            if (this.state.id) {
+              formData.id = this.state.id
+            }
+            console.log(formData)
+            this.saveData(formData)
+          }
+        }
+      )
     }
     render () {
       const { getFieldDecorator } = this.props.form
@@ -66,15 +125,25 @@ class ArticleEdit extends React.Component {
                   {getFieldDecorator('summary', {
                     initialValue: data.summary
                   })(
-                    <Input placeholder='请输入文章概要' />
+                    <TextArea rows={3} placeholder='请输入文章概要' />
                   )}
                 </FormItem>
                 <FormItem>
-                  {getFieldDecorator('content', {
-                    initialValue: data.content
-                  })(
-                    <Input placeholder='请输入文章概要' />
-                  )}
+                  <Upload 
+                    name='postFile'
+                    beforeUpload={this.beforeUpload}
+                    onChange={this.handleUpload.bind(this)}
+                    action='/server/weiquan/upload/img'
+                    showUploadList={false}
+                    listType='picture'>
+                    <Button>
+                      <Icon type='upload' /> 上传缩略图
+                    </Button>
+                  </Upload>
+                  {data.thumb ? <div style={{ width: '300px', marginTop: '20px' }}><img style={{ width: '100%' }} alt='thumb' src={data.thumb} /></div> : ''}
+                </FormItem>
+                <FormItem>
+                  <Editor onChange={this.handleEditorChange.bind(this)} content={data.content} />
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('link', {
@@ -82,6 +151,9 @@ class ArticleEdit extends React.Component {
                   })(
                     <Input placeholder='如果文章无内容，可以提供文章外链' />
                   )}
+                </FormItem>
+                <FormItem>
+                  <Button type="primary" onClick={this.handleSubmit.bind(this)}>保存</Button>
                 </FormItem>
               </Form>
           </div>
