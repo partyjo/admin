@@ -15,8 +15,8 @@ export default class MyEditor extends React.Component {
       content: props.content
     }
   }
-  componentWillMount () {
-    const editorState = this.html2Draft(this.state.content)
+  componentWillReceiveProps (nextProps) {
+    const editorState = this.html2Draft(nextProps.content)
     this.setState({
       editorState
     })

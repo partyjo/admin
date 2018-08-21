@@ -6,6 +6,7 @@ import HomePage from 'bundle-loader?lazy!./pages/home/index'
 import WeiquanPage from 'bundle-loader?lazy!./pages/weiquan/index'
 import ArticleListPage from 'bundle-loader?lazy!./pages/article/list/index'
 import ArticleEditpage from 'bundle-loader?lazy!./pages/article/edit/index'
+import SystemPage from 'bundle-loader?lazy!./pages/system/index'
 
 export default (
     <div>
@@ -16,5 +17,6 @@ export default (
         <Route path='/weiquan' component={Bundle(WeiquanPage)} />
         <Route path='/article/list' component={Bundle(ArticleListPage)} />
         <Route path='/article/edit/:id' component={Bundle(ArticleEditpage)} />
+        <Route path='/system' component={Bundle(SystemPage)} />
     </div>
 )

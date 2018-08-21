@@ -19,6 +19,7 @@ export default withRouter(props => (
 				<Menu.Item key="/home"><Link to='/home'>首页</Link></Menu.Item>
 				<Menu.Item key="/weiquan"><Link to='/weiquan'>维权管理</Link></Menu.Item>
 				<Menu.Item key="/article/list"><Link to='/article/list'>文章管理</Link></Menu.Item>
+				<Menu.Item key="/system"><Link to='/system'>系统设置</Link></Menu.Item>
 			</Menu>
 		</Header>
 		<Content style={{ padding: '0 50px', marginTop: 50 }}>
