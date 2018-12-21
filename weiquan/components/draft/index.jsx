@@ -4,6 +4,7 @@ import { convertToRaw, EditorState, ContentState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import draftToHtml from 'draftjs-to-html'
 import htmlToDraft from 'html-to-draftjs'
+import ajax from '../../http/index'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import './index.less'
 
@@ -30,15 +31,37 @@ export default class MyEditor extends React.Component {
     return new Promise(
       (resolve, reject) => {
         var reader = new FileReader()
-
         reader.onloadend = function() {
-          resolve({ data: { link: reader.result } })
+          let formData = new FormData()
+          formData.append('postFile', reader.result)
+          ajax({
+            method: 'post',
+            url: '/upload/base64',
+            data: formData
+          }).then(res => {
+            console.log(res)
+            if (res.code === 0) {
+              resolve({ data: { link: res.data.file_path } })
+            }
+          })
         }
-
         reader.readAsDataURL(file)
       }
     )
   }
+  // uploadCallback (file) {
+  //   return new Promise(
+  //     (resolve, reject) => {
+  //       var reader = new FileReader()
+
+  //       reader.onloadend = function() {
+  //         resolve({ data: { link: reader.result } })
+  //       }
+
+  //       reader.readAsDataURL(file)
+  //     }
+  //   )
+  // }
   onContentStateChange (contentState) {
     this.props.onChange(this.draft2Html(contentState))
   }

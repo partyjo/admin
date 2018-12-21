@@ -55,6 +55,8 @@ class ArticleEdit extends React.Component {
           Message.success('保存成功')
           if (this.state.id === 0) {
             location.href = '/weiquan-admin/#/article/list'
+          } else {
+            location.reload()
           }
         }
       })

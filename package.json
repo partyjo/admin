@@ -19,6 +19,7 @@
     "antd": "^3.8.0",
     "antd-mobile": "^2.2.2",
     "axios": "^0.18.0",
+    "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
     "html-to-draftjs": "^1.4.0",
     "koa": "^2.5.2",
