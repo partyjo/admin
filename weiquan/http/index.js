@@ -3,8 +3,8 @@ import { Toast } from 'antd-mobile'
 
 // 创建实例
 const ajax = axios.create({
-  baseURL: '/api/',
-  // baseURL: 'http://partyjo.nextdog.cc/server/weiquan/',
+  // baseURL: '/api/',
+  baseURL: 'http://partyjo.nextdog.cc/server/weiquan/',
   timeout: 1000,
   headers: {'X-Custom-Header': 'foobar'}
 });

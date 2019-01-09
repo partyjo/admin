@@ -156,7 +156,10 @@ class Weiquan extends React.Component {
     ajax({
       method: 'post',
       url: '/forms/update',
-      params: row
+      data: {
+        id: row.id,
+        reply: row.reply
+      }
     }).then(res => {
       if (res.code === 0) {
         const newData = [...this.state.dataSource];
