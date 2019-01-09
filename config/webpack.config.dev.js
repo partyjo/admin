@@ -19,7 +19,7 @@ const webpackConfig = webpackMerge(webpackBaseConfig, {
         open: false,
         proxy: {
             '/api': {
-                target: `http://localhost/partyjo/server/${utils.project}/`,
+                target: 'http://partyjo.nextdog.cc/server/weiquan/',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': '/'
