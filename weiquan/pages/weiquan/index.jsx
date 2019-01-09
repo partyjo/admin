@@ -163,7 +163,7 @@ class Weiquan extends React.Component {
     }).then(res => {
       if (res.code === 0) {
         const newData = [...this.state.dataSource];
-        const index = newData.findIndex(item => row.key === item.key);
+        const index = newData.findIndex(item => row.id === item.id);
         const item = newData[index];
         newData.splice(index, 1, {
           ...item,
